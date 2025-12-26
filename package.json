@@ -1,0 +1,27 @@
+{
+  "name": "yuumin",
+  "version": "1.0.50",
+  "module": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "db:introspect": "bun --bun drizzle-kit introspect",
+    "db:generate": "bun --bun drizzle-kit generate",
+    "db:push": "bun --bun drizzle-kit push"
+  },
+  "dependencies": {
+    "@elysiajs/openapi": "^1.4.12",
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.45.1",
+    "elysia": "latest",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.7.3",
+    "bun-types": "latest",
+    "eslint": "^9.39.2",
+    "eslint-plugin-format": "^1.1.0",
+    "jiti": "^2.6.1"
+  }
+}
