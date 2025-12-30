@@ -6,6 +6,5 @@ export default defineConfig({
     // 或分开写：host, port, user: process.env.DB_USER, password: process.env.DB_PASSWORD 等
   },
   dialect: 'postgresql', // 或 "mysql" / "sqlite"
-  out: './src/db/pg/out', // 迁移文件目录
   schema: './src/db/pg/schemas/*.ts',
 })

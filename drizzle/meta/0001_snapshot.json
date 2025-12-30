@@ -1,6 +1,6 @@
 {
-  "id": "a53c8a74-c20e-4f59-8aac-933900c44339",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "768aed6d-507a-4c6b-b065-446ac27f6cef",
+  "prevId": "a53c8a74-c20e-4f59-8aac-933900c44339",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -39,6 +39,12 @@
         },
         "name": {
           "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
