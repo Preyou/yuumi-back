@@ -1,6 +1,6 @@
 import { Elysia, t } from 'elysia'
 import { pg } from '@/db'
-import formatResponse from '@/plugins/formatResponse'
+import formatResponse, * as response from '@/plugins/formatResponse'
 import model from './model.js'
 
 export default (prefix: string) => new Elysia({
@@ -8,6 +8,19 @@ export default (prefix: string) => new Elysia({
 })
   .use(model)
   .use(formatResponse)
+  // .use(
+  //   <E extends Elysia> (app) => new Elysia({
+  //     name: 'response-format1',
+  //   })
+  //     .macro({
+  //       hi: (word: string) => ({
+  //         beforeHandle() {
+  //           console.log(word)
+  //         },
+  //       }),
+  //     }),
+  // )
+
   .group(
     prefix,
     app =>
@@ -15,7 +28,7 @@ export default (prefix: string) => new Elysia({
         '/register',
         async ({ body }) => {
           await pg.db.insert(pg.schemas.tables.users).values(body)
-          return true
+          return response.success(true)
         },
         {
           body: 'user.insert',
@@ -25,21 +38,18 @@ export default (prefix: string) => new Elysia({
         .get(
           '/user:id',
           async ({ params }) => {
-            return (await pg.db.query.users.findFirst({
+            return response.success((await pg.db.query.users.findFirst({
               where(fields, { eq }) {
                 return eq(fields.id, params.id)
               },
-            }))!
-            // return {}
+            }))!)
           },
           {
             params: t.Object({
               id: t.Number(),
             }),
-            response: 'user.info',
-            successMsg(...args) {
-              // console.log(args)
-              return '123'
+            response: {
+              200: response.response200(app.models['user.info'].Schema()),
             },
           },
         ),
