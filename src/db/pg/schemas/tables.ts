@@ -1,4 +1,5 @@
-import { integer, pgTable, unique, varchar } from 'drizzle-orm/pg-core'
+import { sql } from 'drizzle-orm'
+import { check, integer, pgTable, unique, varchar } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
   age: integer().notNull(),
@@ -8,4 +9,5 @@ export const users = pgTable('users', {
   password: varchar({ length: 255 }).notNull(),
 }, table => [
   unique('users_email_unique').on(table.email),
+  check('users_age_check', sql`${table.age} > 0 and ${table.age} < 200`),
 ])

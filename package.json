@@ -10,6 +10,8 @@
     "db:push": "bun --bun drizzle-kit push"
   },
   "dependencies": {
+    "@elysiajs/bearer": "^1.4.2",
+    "@elysiajs/jwt": "^1.4.0",
     "@elysiajs/openapi": "^1.4.12",
     "@types/pg": "^8.16.0",
     "drizzle-kit": "^0.31.8",

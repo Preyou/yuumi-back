@@ -1,13 +1,13 @@
 import { openapi } from '@elysiajs/openapi'
 import { Elysia } from 'elysia'
-import usersRouter from '@/modules/users'
+import authRouter from '@/services/auth'
+import usersRouter from '@/services/users'
 
 const app = new Elysia()
   .use(openapi())
+  .use(authRouter('/auth'))
   .use(usersRouter('/users'))
-  // .get('/', () => 'Hello Elysia', {
-  //   //
-  // })
+
   .listen(3000)
 
 console.log(

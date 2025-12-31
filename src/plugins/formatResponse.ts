@@ -1,47 +1,43 @@
 import type { TSchema } from 'elysia'
 import { Elysia, t } from 'elysia'
 
-export function success<D = unknown>(data: D, message = 'success') {
+export function format<D = unknown>(data: D, message = '') {
   return {
     data,
     message,
   }
 }
 
-export function error<E = unknown>(data: E, error = new Error('unknown error')) {
-  return {
-    data,
-    message: error.message,
-  }
-}
+const responseFormat = t.Object({
+  data: t.Unknown(),
+  message: t.String(),
+})
 
-const app = new Elysia({
+export default new Elysia({
   name: 'response-format',
 })
-  .as('scoped')
   .model({
-    'response.format': t.Object({
-      data: t.Unknown(),
-      message: t.String(),
-    }),
+    'response.format': responseFormat,
   })
   .guard({
-    as: 'scoped',
-    response: {
-      // 200: 'response.format',
-    },
+    response: new Proxy({}, {
+      get() {
+        return 'response.format'
+      },
+    }) as Record<200 | 201 | 400 | 401 | 500, 'response.format'>,
     // schema: 'standalone',
   })
   .onError((context) => {
-    console.log(context.error)
-
-    return error(context.error)
+    return context.status(500, {
+      data: context.error,
+      message: context.code.toString(),
+    })
   })
+  .as('scoped')
 
-export function response200(schema: TSchema) {
-  return t.Composite([t.Pick(app.models['response.format'].Schema(), ['message']), t.Object({
+export function responseDTO<TS extends TSchema>(schema: TS) {
+  return t.Object({
     data: schema,
-  })])
+    message: t.String(),
+  })
 }
-
-export default app
