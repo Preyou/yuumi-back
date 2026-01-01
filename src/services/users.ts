@@ -19,7 +19,9 @@ export default (prefix: string) => new Elysia({
     },
     app =>
       app
-        .get('/user/:id', async ({ params, status }) => {
+        .get('/user/:id', async ({ params, status, ...a }) => {
+          console.log(a)
+
           const user = await pg.db.query.users.findFirst({
             where(fields, operators) {
               return operators.eq(fields.id, params.id)
