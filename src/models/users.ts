@@ -5,7 +5,18 @@ import { pg } from '@/db'
 const age = t.Integer({ maximum: 200, minimum: 0 })
 const email = t.String({ format: 'email' })
 
-export const userDTO = createSelectSchema(pg.schemas.tables.users, {
+const __select = createSelectSchema(pg.schemas.tables.users, {
   age,
   email,
 })
+
+export const all = t.Object({
+  ...__select.properties,
+  id: t.Integer(),
+})
+
+export const insert = t.Omit(all, ['id', 'createAt', 'updateAt'])
+
+export const update = t.Partial(insert)
+
+export const select = t.Omit(all, ['password'])

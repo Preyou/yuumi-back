@@ -5,43 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1767001581178,
-      "tag": "0000_harsh_cobalt_man",
+      "when": 1767265468899,
+      "tag": "0000_calm_warbound",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1767062999914,
-      "tag": "0001_lethal_black_bird",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1767160328273,
-      "tag": "0002_milky_sally_floyd",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1767169315834,
-      "tag": "0003_serious_komodo",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1767171849180,
-      "tag": "0004_ambitious_natasha_romanoff",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1767171948807,
-      "tag": "0005_icy_sentinels",
+      "when": 1767267814305,
+      "tag": "0001_uneven_reaper",
       "breakpoints": true
     }
   ]

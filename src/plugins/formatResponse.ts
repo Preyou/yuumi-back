@@ -20,11 +20,9 @@ export default new Elysia({
     'response.format': responseFormat,
   })
   .guard({
-    response: new Proxy({}, {
-      get() {
-        return 'response.format'
-      },
-    }) as Record<200 | 201 | 400 | 401 | 500, 'response.format'>,
+    response: {
+      500: 'response.format',
+    },
     // schema: 'standalone',
   })
   .onError((context) => {

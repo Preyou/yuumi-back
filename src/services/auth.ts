@@ -1,6 +1,6 @@
 import { Elysia, status, t } from 'elysia'
 import { pg } from '@/db'
-import { userDTO } from '@/models/users'
+import { userDTO } from '@/models'
 import formatResponse, { responseDTO } from '@/plugins/formatResponse'
 import jwt from '@/plugins/jwt'
 
@@ -12,7 +12,7 @@ export default (prefix: string) => new Elysia({
   .group(
     prefix,
     {
-      body: t.Pick(userDTO, ['password']),
+      body: t.Pick(userDTO.all, ['password']),
       detail: {
         tags: ['auth'],
       },
@@ -32,8 +32,10 @@ export default (prefix: string) => new Elysia({
             async beforeHandle({ body }) {
               body.password = await Bun.password.hash(body.password)
             },
-            body: t.Omit(userDTO, ['id']),
-            response: responseDTO(t.Boolean()),
+            body: userDTO.insert,
+            response: {
+              201: responseDTO(t.Boolean()),
+            },
           },
         )
         .group('/sign', app => app
@@ -53,7 +55,6 @@ export default (prefix: string) => new Elysia({
               ? status(200, {
                   data: {
                     token: await jwt.sign({
-                    //   email: user.email,
                       id: user.id,
                     }),
                   },
@@ -68,8 +69,12 @@ export default (prefix: string) => new Elysia({
               email: t.String(),
               password: t.String(),
             }),
-            response: responseDTO(t.Object({
-              token: t.String(),
-            })),
+            response: {
+              200: responseDTO(t.Object({
+                token: t.String(),
+              })),
+              400: responseDTO(t.Null()),
+              401: responseDTO(t.Null()),
+            },
           })),
   )
